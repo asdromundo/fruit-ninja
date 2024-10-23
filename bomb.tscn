@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://vs3m7opm7gla"]
+
+[ext_resource type="PackedScene" uid="uid://cyx62drxtgvqm" path="res://src/scenes/fruit.tscn" id="1_xjrqs"]
+[ext_resource type="Script" path="res://bomb.gd" id="2_xpe2s"]
+
+[node name="Bomb" groups=["bomb"] instance=ExtResource("1_xjrqs")]
+script = ExtResource("2_xpe2s")

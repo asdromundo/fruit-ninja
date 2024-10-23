@@ -1,14 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://cyx62drxtgvqm"]
+[gd_scene load_steps=5 format=3 uid="uid://cyx62drxtgvqm"]
 
 [ext_resource type="Script" path="res://src/scenes/fruit.gd" id="1_6dtr0"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_k57n3"]
-size = Vector3(0.1, 0.2, 0.1)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j5w0x"]
+radius = 0.075
+height = 0.2
 
-[sub_resource type="BoxMesh" id="BoxMesh_320wo"]
-size = Vector3(0.1, 0.2, 0.1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2qh4d"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5uhk4"]
+material = SubResource("StandardMaterial3D_2qh4d")
+radius = 0.075
+height = 0.2
 
 [node name="Fruit" type="RigidBody3D" groups=["fruit"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 2
 collision_mask = 7
 mass = 0.2
@@ -16,15 +23,14 @@ gravity_scale = 0.2
 script = ExtResource("1_6dtr0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_k57n3")
+shape = SubResource("CapsuleShape3D_j5w0x")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_320wo")
+mesh = SubResource("CapsuleMesh_5uhk4")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 autostart = true
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

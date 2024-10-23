@@ -1,13 +1,5 @@
-extends RigidBody3D
-class_name Fruit
-enum Fruits {bomb, orange, apple, watermelon}
-
-const LAUNCH_FORCE = Vector3.ONE  # Fuerza inicial hacia arriba (ajusta según lo necesites)
-@export var spin_force = Vector3.ONE   # Fuerza de giro si quieres que rote en el aire
-@export var upward_force_multiplier = 3
-@export var fruit_type : Fruits
-@export var shape : Shape3D
-@export var mesh : Mesh
+extends Fruit
+class_name Bomb
 
 func _ready():
 	$Mesh.mesh = mesh

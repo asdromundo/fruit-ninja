@@ -1,7 +1,10 @@
 extends Node3D
 
+@warning_ignore("unused_signal")
 signal focus_lost
+@warning_ignore("unused_signal")
 signal focus_gained
+@warning_ignore("unused_signal")
 signal pose_recentered
 
 @export var maximum_refresh_rate : int = 120
