@@ -1,18 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://wijwpoibow4x"]
+[gd_scene load_steps=12 format=3 uid="uid://wijwpoibow4x"]
 
 [ext_resource type="Script" path="res://src/scenes/main.gd" id="1_tb7gp"]
+[ext_resource type="Texture2D" uid="uid://1w6rgo0675xr" path="res://src/assets/textures/clouds_anime_6k.jpg" id="2_ugrsb"]
+[ext_resource type="Script" path="res://src/scenes/spawner.gd" id="3_ppics"]
+[ext_resource type="Script" path="res://src/scenes/sword.gd" id="3_rrslr"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hh58b"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_kn3a5"]
+panorama = ExtResource("2_ugrsb")
 
 [sub_resource type="Sky" id="Sky_tugg1"]
-sky_material = SubResource("ProceduralSkyMaterial_hh58b")
+sky_material = SubResource("PanoramaSkyMaterial_kn3a5")
 
 [sub_resource type="Environment" id="Environment_iq5rb"]
 background_mode = 2
 sky = SubResource("Sky_tugg1")
+sky_rotation = Vector3(0, 2.3911, 0)
 tonemap_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_jfujw"]
+size = Vector3(0.01, 1, 0.02)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aqii6"]
+size = Vector3(0.01, 1, 0.02)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ifikm"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bkfuk"]
+top_radius = 5.0
+bottom_radius = 5.0
+height = 1.0
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_tb7gp")
@@ -27,9 +44,57 @@ environment = SubResource("Environment_iq5rb")
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="Left Hand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1.4, -0.5)
 tracker = &"left_hand"
 
+[node name="CharacterBody3D" type="CharacterBody3D" parent="XROrigin3D/Left Hand"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/Left Hand/CharacterBody3D"]
+mesh = SubResource("BoxMesh_jfujw")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/Left Hand/CharacterBody3D"]
+shape = SubResource("BoxShape3D_aqii6")
+
 [node name="Right Hand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.4, -0.5)
 tracker = &"right_hand"
+
+[node name="Sword" type="CharacterBody3D" parent="XROrigin3D/Right Hand"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("3_rrslr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/Right Hand/Sword"]
+mesh = SubResource("BoxMesh_jfujw")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/Right Hand/Sword"]
+shape = SubResource("BoxShape3D_aqii6")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.190918, 0)
+shape = SubResource("BoxShape3D_ifikm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor/CollisionShape3D"]
+mesh = SubResource("CylinderMesh_bkfuk")
+
+[node name="Spawner" type="Node" parent="."]
+script = ExtResource("3_ppics")
+
+[node name="Timer" type="Timer" parent="Spawner"]
+autostart = true
+
+[node name="Score" type="Label3D" parent="Spawner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5)
+text = "Placeholder"
+
+[connection signal="fruit_contact" from="XROrigin3D/Right Hand/Sword" to="Spawner" method="_on_sword_fruit_contact"]
+[connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_timer_timeout"]

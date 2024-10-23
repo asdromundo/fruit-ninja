@@ -4,7 +4,7 @@ signal focus_lost
 signal focus_gained
 signal pose_recentered
 
-@export var maximum_refresh_rate : int = 90
+@export var maximum_refresh_rate : int = 120
 
 var xr_interface : OpenXRInterface
 var xr_is_focussed = false
@@ -71,7 +71,7 @@ func _on_openxr_session_begun() -> void:
 		current_refresh_rate = new_rate
 
 	# Now match our physics rate
-	Engine.physics_ticks_per_second = current_refresh_rate
+	Engine.physics_ticks_per_second = min(current_refresh_rate, 60)
 
 # Handle OpenXR visible state
 func _on_openxr_visible_state() -> void:

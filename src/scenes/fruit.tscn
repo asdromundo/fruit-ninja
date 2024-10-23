@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyx62drxtgvqm"]
+
+[ext_resource type="Script" path="res://src/scenes/fruit.gd" id="1_6dtr0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k57n3"]
+size = Vector3(0.1, 0.2, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_320wo"]
+size = Vector3(0.1, 0.2, 0.1)
+
+[node name="Fruit" type="RigidBody3D" groups=["fruit"]]
+collision_layer = 2
+collision_mask = 7
+mass = 0.2
+gravity_scale = 0.2
+script = ExtResource("1_6dtr0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_k57n3")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_320wo")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
