@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://wijwpoibow4x"]
+[gd_scene load_steps=14 format=3 uid="uid://wijwpoibow4x"]
 
 [ext_resource type="Script" path="res://src/scenes/main.gd" id="1_tb7gp"]
 [ext_resource type="Texture2D" uid="uid://1w6rgo0675xr" path="res://src/assets/textures/clouds_anime_6k.jpg" id="2_ugrsb"]
 [ext_resource type="PackedScene" uid="uid://yhkjelplrotm" path="res://src/scenes/sword.tscn" id="3_66dii"]
+[ext_resource type="AudioStream" uid="uid://bmsl7olx80mk4" path="res://src/assets/sound/menu-hd-appear.wav" id="5_1s8v6"]
 [ext_resource type="Script" path="res://src/scenes/level.gd" id="5_yv12r"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_kn3a5"]
@@ -130,6 +131,10 @@ skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Level/StartFruit"]
 shape = SubResource("CapsuleShape3D_ikogq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Level"]
+stream = ExtResource("5_1s8v6")
+autoplay = true
 
 [connection signal="bomb_contact" from="XROrigin3D/Left Hand/Sword" to="Level" method="_on_sword_bomb_contact"]
 [connection signal="button_contact" from="XROrigin3D/Left Hand/Sword" to="Level" method="_on_sword_button_contact"]

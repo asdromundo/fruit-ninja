@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://vs3m7opm7gla"]
+[gd_scene load_steps=4 format=3 uid="uid://vs3m7opm7gla"]
 
 [ext_resource type="PackedScene" uid="uid://cyx62drxtgvqm" path="res://src/scenes/fruit.tscn" id="1_xjrqs"]
 [ext_resource type="Script" path="res://bomb.gd" id="2_xpe2s"]
+[ext_resource type="AudioStream" uid="uid://csbii3qojiyw7" path="res://src/assets/sound/Throw-bomb.wav" id="3_p7myj"]
 
 [node name="Bomb" groups=["bomb"] instance=ExtResource("1_xjrqs")]
 script = ExtResource("2_xpe2s")
+
+[node name="AudioStreamPlayer3D" parent="." index="3"]
+stream = ExtResource("3_p7myj")

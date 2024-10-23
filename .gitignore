@@ -3,6 +3,7 @@
 /android/
 
 addons/
+src/assets/
 
 *.tmp
 *.import
