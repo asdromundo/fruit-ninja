@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://wijwpoibow4x"]
+
+[ext_resource type="Script" path="res://src/scenes/main.gd" id="1_tb7gp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hh58b"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_tugg1"]
+sky_material = SubResource("ProceduralSkyMaterial_hh58b")
+
+[sub_resource type="Environment" id="Environment_iq5rb"]
+background_mode = 2
+sky = SubResource("Sky_tugg1")
+tonemap_mode = 2
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_tb7gp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_iq5rb")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="Left Hand" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="Right Hand" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
