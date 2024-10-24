@@ -63,7 +63,7 @@ func fruit_factory() -> Fruit:
 				mesh.height = mesh.radius * 2
 				material.albedo_color = Color("ff4500")
 
-	instance.fruit_type = fruit_type
+	instance.fruit_type = fruit_type as Fruit.Fruits
 	mesh.material = material
 	instance.mesh = mesh
 	instance.shape = shape

@@ -15,18 +15,17 @@ func start() -> void:
 	audio_stream_player.play()
 	$"Game Over".hide()
 	$"Final Score".hide()
+	score = 0
 	$Score.show()
 	$Start.hide()
 	$Title.hide()
 	$StartFruit.hide()
 	$Lifes.show()
-	score = 0
 	lifes = 1
 	game = spawner.instantiate()
 	$"..".add_child.call_deferred(game)
 	
 func stop() -> void:
-	$"..".remove_child(game)
 	$Lifes.hide()
 	$Score.hide()
 	$"Game Over".show()
@@ -50,10 +49,17 @@ func _on_sword_fruit_contact() -> void:
 	$Score.text = "Puntuación: "+ str(score)
 
 
-func _on_sword_bomb_contact() -> void:
+func _on_sword_bomb_contact(bomb : Bomb) -> void:
 	lifes -= 1
 	$Lifes.text = "Vidas restantes: " + str(lifes)
 	if lifes == 0:
+		bomb.reparent(self)
+		$"..".remove_child(game)
+		bomb.freeze = true
+		audio = load_wav("res://src/assets/sound/Bomb-explode.wav")
+		audio_stream_player.stream = audio
+		audio_stream_player.play()
+		await get_tree().create_timer(4).timeout
 		stop()
 
 

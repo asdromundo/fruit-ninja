@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyx62drxtgvqm"]
+[gd_scene load_steps=7 format=3 uid="uid://cyx62drxtgvqm"]
 
 [ext_resource type="Script" path="res://src/scenes/fruit.gd" id="1_6dtr0"]
 [ext_resource type="AudioStream" uid="uid://41wjqkwvx8bd" path="res://src/assets/sound/Throw-fruit.wav" id="2_0bafh"]
+[ext_resource type="AudioStream" uid="uid://bfx1sfvqska2f" path="res://src/assets/sound/silencio.wav" id="3_g16ab"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j5w0x"]
 radius = 0.075
@@ -16,7 +17,6 @@ radius = 0.075
 height = 0.2
 
 [node name="Fruit" type="RigidBody3D" groups=["fruit"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 2
 collision_mask = 7
 mass = 0.2
@@ -34,9 +34,13 @@ wait_time = 3.0
 one_shot = true
 autostart = true
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+[node name="SpawnSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_0bafh")
 unit_size = 1.0
 autoplay = true
+
+[node name="Sound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_g16ab")
+unit_size = 1.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

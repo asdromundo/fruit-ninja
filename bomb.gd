@@ -1,6 +1,8 @@
 extends Fruit
 class_name Bomb
 
+@onready var explotion = $Explotion
+
 func _ready():
 	$Mesh.mesh = mesh
 	$CollisionShape3D.shape = shape
